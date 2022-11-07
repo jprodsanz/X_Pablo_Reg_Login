@@ -53,18 +53,24 @@ class Registrant:
         if len(results) >= 1:
             flash("Email already taken.","register")
             is_valid=False
+        
         if not EMAIL_REGEX.match(registrant['email']):
             flash("Invalid Email!!!","register")
             is_valid=False
+        
         if len(registrant['first_name']) < 3:
             flash("First name must be at least 3 characters","register")
             is_valid= False
+        
         if len(registrant['last_name']) < 3:
             flash("Last name must be at least 3 characters","register")
             is_valid= False
+        
         if len(registrant['password']) < 8:
             flash("Password must be at least 8 characters","register")
             is_valid= False
+        
         if registrant['password'] != registrant['confirm']:
             flash("Passwords don't match","register")
+        
         return is_valid

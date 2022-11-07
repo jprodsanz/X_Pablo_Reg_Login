@@ -1,4 +1,4 @@
-from flask import render_template,redirect, session, request, flash
+from flask import render_template,redirect, session, request, flash, url_for
 from flask_app import app
 from flask_app.models.registrant import Registrant
 from flask_bcrypt import Bcrypt 
@@ -28,7 +28,7 @@ def register():
 
     return redirect('/dashboard')
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET','POST'])
 def login():
     registrant = Registrant.get_by_email(request.form)
 
