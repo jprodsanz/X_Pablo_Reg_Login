@@ -6,7 +6,6 @@ bcrypt = Bcrypt(app)
 
 
 @app.route('/')
-@app.route('/home')
 def home():
     return render_template('register.html')
 
@@ -28,7 +27,11 @@ def register():
 
     return redirect('/dashboard')
 
-@app.route('/login', methods=['GET','POST'])
+@app.route('/home')
+def home_2():
+    return render_template('login.html')
+
+@app.route('/login', methods=['POST'])
 def login():
     registrant = Registrant.get_by_email(request.form)
 

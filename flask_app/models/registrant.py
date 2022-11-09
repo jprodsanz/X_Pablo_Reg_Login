@@ -19,12 +19,12 @@ class Registrant:
 
     @classmethod
     def save(cls,data):
-        query = "INSERT INTO users (first_name,last_name,email,password) VALUES(%(first_name)s,%(last_name)s,%(email)s,%(password)s)"
+        query = "INSERT INTO registrants (first_name,last_name,email,password) VALUES(%(first_name)s,%(last_name)s,%(email)s,%(password)s);"
         return connectToMySQL(cls.db).query_db(query,data)
 
     @classmethod
     def get_all(cls):
-        query = "SELECT * FROM users;"
+        query = "SELECT * FROM registrants;"
         results = connectToMySQL(cls.db).query_db(query)
         users = []
         for row in results:
@@ -33,7 +33,7 @@ class Registrant:
 
     @classmethod
     def get_by_email(cls,data):
-        query = "SELECT * FROM users WHERE email = %(email)s;"
+        query = "SELECT * FROM registrants WHERE email = %(email)s;"
         results = connectToMySQL(cls.db).query_db(query,data)
         if len(results) < 1:
             return False
@@ -41,15 +41,15 @@ class Registrant:
 
     @classmethod
     def get_by_id(cls,data):
-        query = "SELECT * FROM users WHERE id = %(id)s;"
+        query = "SELECT * FROM registrants WHERE id = %(id)s;"
         results = connectToMySQL(cls.db).query_db(query,data)
         return cls(results[0])
 
     @staticmethod
     def validate_register(registrant):
         is_valid = True
-        query = "SELECT * FROM users WHERE email = %(email)s;"
-        results = connectToMySQL(Registrant.db).query_db(query,registrant)
+        query = "SELECT * FROM registrants WHERE email = %(email)s;"
+        results = connectToMySQL("login_reg_x").query_db(query,registrant)
         if len(results) >= 1:
             flash("Email already taken.","register")
             is_valid=False
@@ -70,7 +70,7 @@ class Registrant:
             flash("Password must be at least 8 characters","register")
             is_valid= False
         
-        if registrant['password'] != registrant['confirm']:
+        if registrant['password'] != registrant['confirm_password']:
             flash("Passwords don't match","register")
         
         return is_valid
